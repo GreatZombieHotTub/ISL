@@ -1,3 +1,10 @@
+"""
+Shift Cipher:
+Encryption → C = (P + K) mod 26
+Decryption → P = (C - K) mod 26
+Key recovery → K = (C - P) mod 26
+"""
+
 def decrypt_shift(ciphertext, shift):
     plaintext = ""
     for char in ciphertext.upper():
@@ -16,6 +23,20 @@ def find_shift_and_decrypt(known_plain, known_cipher, target_cipher):
     p_num = ord(known_plain[0].upper()) - ord("A")
     c_num = ord(known_cipher[0].upper()) - ord("A")
     shift = (c_num - p_num) % 26
+
+    """
+So we can calculate the shift:
+
+$$ K = (C-P)\mod26 $$
+
+Using the first letters:
+
+Y = 24
+C = 2
+K=(2−24)mod26=4
+So the shift key = 4.
+
+Then decrypt XVIEWYWI by shifting every letter back by 4:"""
 
     # Decrypt the target ciphertext
     plaintext = decrypt_shift(target_cipher, shift)
