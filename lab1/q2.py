@@ -10,19 +10,25 @@ def run_vigenere(clean_text):
 
     v_decrypted = ""
     for c_char, k_char in zip(v_cipher, expanded_key):
-        c_num = ord(c_char) - ord('a')
+        c_num = ord(c_char) - ord('a')  #a=0
         k_num = ord(k_char) - ord('a')
-        v_decrypted += chr(((c_num - k_num) % 26) + ord('a'))
+        v_decrypted += chr(((c_num - k_num) % 26) + ord('a'))  
+
+    """ k a r n a 
+    +  h e l l o h e l l o
+    ---------------------
+       answer """
 
     print("--- Vigenere Cipher Results ---")
     print("Expanded Key:", expanded_key)
     print("Ciphertext:  ", v_cipher)
     print("Decrypted:   ", v_decrypted)
 
+#length of key made equal to ciphertext using repetition
 
 def run_autokey(clean_text):
     initial_key = 7
-    keystream = [initial_key] + [ord(p) - ord('a') for p in clean_text[:-1]]
+    keystream = [initial_key] + [ord(p) - ord('a') for p in clean_text[:-1]]  #Initial key + plaintext letters
 
     a_cipher = ""
     for p_char, k_num in zip(clean_text, keystream):
@@ -42,6 +48,12 @@ def run_autokey(clean_text):
     print("Initial Key: ", initial_key)
     print("Ciphertext:  ", a_cipher)
     print("Decrypted:   ", a_decrypted)
+
+""" if key=10
+     k a r n a t a k a
+ +  10 k a r n a t a k 
+ ------------------------
+ answer"""
 
 
 def q2_menu():
