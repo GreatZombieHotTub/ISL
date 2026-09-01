@@ -21,3 +21,11 @@ decrypted = decipher.decrypt(ciphertext)
 decrypted_message = unpad(decrypted, AES.block_size).decode()
 
 print("Decrypted Message:", decrypted_message)
+
+"""
+The block size is always 128 bits.
+Only the key size and number of rounds change.
+
+AES-128 → 128-bit key → 10 rounds
+AES-192 → 192-bit key → 12 rounds
+AES-256 → 256-bit key → 14 rounds"""
