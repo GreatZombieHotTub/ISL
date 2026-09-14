@@ -138,7 +138,7 @@ print("Encrypted Data   :", encrypted.hex())
 decrypted = rsa_decrypt(private_key, encrypted)
 
 print("Decrypted Message:", decrypted)
-
+#only shows that finance is receiving some data doesnt show whos sending it
 
 # ---------------------------------------------------------
 # Key Revocation
