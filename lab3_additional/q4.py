@@ -87,17 +87,17 @@ def decrypt_data(ephemeral_public, nonce, ciphertext):
 # ---------------- PERFORMANCE TEST ----------------
 
 sizes = [
-    1024,
-    10 * 1024,
-    100 * 1024
+    1024, #1KB
+    10 * 1024, ##10KB
+    100 * 1024 #100KB
 ]
 
+#This repeats the text and then trims it to exactly size bytes.
 for size in sizes:
 
     data = b"Patient medical record " * (
         size // len(b"Patient medical record ") + 1
     )
-
     data = data[:size]
 
     # Encryption time
