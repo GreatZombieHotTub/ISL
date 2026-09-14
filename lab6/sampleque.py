@@ -1,3 +1,7 @@
+"""wait lemme finish student does the encryption, they can hash and rsa signature. 
+faculty can decrypt, check the hash and verify rsa. hod can see the hashed thing without checking and verify rsa sign. 
+make the menu driven thing where we can choose whether we're student faculty or hod """
+
 from Crypto.Cipher import DES
 from Crypto.Util.Padding import pad, unpad
 from Crypto.PublicKey import RSA
