@@ -33,7 +33,13 @@ shared_secret = ephemeral_private_key.exchange(
     ec.ECDH(),
     public_key
 )
-
+"""
+| HKDF length | AES version |
+| ----------: | ----------- |
+|  `16` bytes | AES-128     |
+|  `24` bytes | AES-192     |
+|  `32` bytes | AES-256     |
+"""
 # Derive AES key from shared secret
 aes_key = HKDF(
     algorithm=hashes.SHA256(),
