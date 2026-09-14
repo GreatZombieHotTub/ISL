@@ -11,7 +11,7 @@ class RabinKeyManagementService:
     def __init__(self, key_size=1024):
 
         self.key_size = key_size
-        self.keys = {}
+        self.keys = {} #any system created will ALWAYS have its keys here even when its revoked
         self.revoked = set()
         self.audit_log = []
 
@@ -63,7 +63,7 @@ class RabinKeyManagementService:
         self.keys[facility] = {
             "public": public_key,
             "private": private_key,
-            "created": datetime.now(),
+            "created": datetime.now(), #extra info along with the public and priv key of each facility 
             "expires": datetime.now() + timedelta(days=365)
         }
 
@@ -82,6 +82,7 @@ class RabinKeyManagementService:
             print("Facility not found")
             return
 
+        #key isnt permanently deleted but added to the revoked list.
         if facility in self.revoked:
             print("Access denied - key revoked")
             return
@@ -120,6 +121,7 @@ class RabinKeyManagementService:
 
             self.generate_keys(facility)
 
+            #if the facility was revoked earlier it will get removed from revoked list now.
             self.revoked.discard(facility)
 
             self.log("KEY_RENEWED", facility)
