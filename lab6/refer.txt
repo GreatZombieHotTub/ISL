@@ -1,0 +1,138 @@
+all these questions use almost the same flow. bas algorithms aur application ka naam change hota hai.
+
+## common flow
+
+### 1. create the records
+
+the program contains two records and writes them into a `.txt` file.
+
+```text
+two records → text file
+```
+
+### 2. generate signature keys
+
+the student/patient generates:
+
+* private key for signing
+* public key for verification
+
+elgamal or schnorr can be used here.
+
+### 3. student/patient uploads
+
+when option `1` is selected:
+
+```text
+read complete file
+        ↓
+encrypt using aes
+        ↓
+hash original file
+        ↓
+hash encrypted file
+        ↓
+sign encrypted file/hash using private key
+        ↓
+store everything in a list
+```
+
+* original hash is required for checking after decryption.
+* encrypted hash is signed and shown to the restricted role.
+
+[
+a.To convert hex text back into bytes:
+original_bytes = bytes.fromhex(hex_text)
+
+b..hexdigest() is used specifically on a hash object:
+record_hash = SHA256.new(record.encode())
+print(record_hash.hexdigest())
+
+c. .hex convert bytes to hex
+
+d."""import sys
+condition = False
+if not condition:
+    print("Condition is false. Ending program.")
+    sys.exit()
+print("Program continues...")"""
+
+e. """def is_generator_simple(g, p):
+    values = {pow(g, exponent, p) for exponent in range(1, p)}
+    return len(values) == p - 1
+print(is_generator_simple(5, 23))  # True
+print(is_generator_simple(4, 23))  # False"""
+
+### 4. faculty/doctor/officer accesses
+
+when option `2` is selected:
+
+```text
+get encrypted file
+        ↓
+decrypt using same aes key
+        ↓
+hash decrypted file
+        ↓
+compare with original hash
+        ↓
+verify signature using public key
+        ↓
+display complete decrypted file
+```
+
+if hashes match:
+
+```text
+record was not changed
+```
+
+if the signature is valid:
+
+```text
+record came from the correct sender
+```
+
+### 5. hod/admin accesses
+
+when option `3` is selected:
+
+```text
+get encrypted file
+        ↓
+display only its hash
+        ↓
+verify signature using public key
+```
+
+hod/admin cannot decrypt or see the actual records.
+
+### 6. exit
+
+option `4` ends the loop using:
+
+```python
+break
+```
+
+## algorithms in each program
+
+| program         | encryption | integrity hash | signature |
+| --------------- | ---------- | -------------- | --------- |
+| edusecure       | des        | sha-256        | rsa       |
+| medsecure       | aes-256    | sha-256        | elgamal   |
+| placementsecure | aes-128    | md5            | schnorr   |
+
+## one-line revision
+
+```text
+sender encrypts, hashes and signs → authorized receiver decrypts, checks hash and verifies → higher authority sees only hash and verifies
+```
+
+bas exam mein yaad rakhna:
+
+* encryption = confidentiality
+* hashing = integrity
+* digital signature = authenticity
+* private key = signing
+* public key = verification
