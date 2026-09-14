@@ -15,7 +15,7 @@ def generate_weak_keys():
 
     # Deliberately small primes for demonstration
     p = getPrime(20)
-    q = getPrime(20)
+    q = getPrime(20) #gen a 20 bit number
 
     while p == q:
         q = getPrime(20)
