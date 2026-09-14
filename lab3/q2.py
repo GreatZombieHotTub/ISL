@@ -42,6 +42,7 @@ aes_key = HKDF(
     info=b"ECC Encryption"
 ).derive(shared_secret)
 
+#so far everything was for sender, now for RECEIVER BOB
 # Encrypt message using AES
 nonce = os.urandom(12)
 
