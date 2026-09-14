@@ -9,17 +9,19 @@ import secrets
 
 class KeyManagementSystem:
 
+    #this creates 2 empty arrays keys and revoked.
     def __init__(self):
         self.keys = {}
         self.revoked = set()
 
     # Generate RSA key pair
     def generate_keys(self, system):
+        #create the private key for particular subsystem
         key = RSA.generate(2048)
 
         self.keys[system] = {
-            "private": key,
-            "public": key.publickey()
+            "private": key, #p,q,n,e,d
+            "public": key.publickey() #gives the public key n,e
         }
 
         print(f"Keys generated for {system}")
@@ -37,7 +39,7 @@ class KeyManagementSystem:
             self.revoked.add(system)
             print(f"Keys revoked for {system}")
 
-
+#THESE FUNCTIONS ARE OUTSIDE THE CLASS
 # =========================================================
 # DIFFIE-HELLMAN
 # =========================================================
@@ -84,7 +86,6 @@ def rsa_encrypt(public_key, message):
     encrypted = cipher.encrypt(message.encode())
 
     return encrypted
-
 
 def rsa_decrypt(private_key, encrypted):
 
