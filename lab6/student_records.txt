@@ -1,0 +1,11 @@
+student id: 101
+name: alice
+course: cce
+semester: 5
+cgpa: 8.7
+
+student id: 102
+name: bob
+course: cce
+semester: 5
+cgpa: 8.3
