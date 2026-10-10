@@ -1,58 +1,51 @@
-import random
-import math
-
-def gcd(a, b):
-    while b:
-        a, b = b, a % b
-    return a
-
-def lcm(a, b):
-    return a * b // gcd(a, b)
-
 def generate_keys():
-    p = 17
-    q = 19
+    p = 61
+    q = 53
+
     n = p * q
-    nsquare = n * n
-    g = n + 1
-    lam = lcm(p - 1, q - 1)
-    mu = pow(lam, -1, n)
-    return (n, g), (lam, mu)
+    phi = (p - 1) * (q - 1)
 
-def encrypt(public_key, m):
-    n, g = public_key
-    while True:
-        r = random.randint(1, n - 1)
-        if gcd(r, n) == 1:
-            break
-    c = (pow(g, m, n * n) * pow(r, n, n * n)) % (n * n)
-    return c
+    e = 17
+    d = pow(e, -1, phi)
 
-def decrypt(private_key, public_key, c):
-    lam, mu = private_key
-    n, g = public_key
-    nsquare = n * n
-    x = pow(c, lam, nsquare)
-    L = (x - 1) // n
-    return (L * mu) % n
+    return (n, e), (n, d)
 
-def homomorphic_add(c1, c2, public_key):
-    n, g = public_key
-    return (c1 * c2) % (n * n)
 
+def encrypt(public_key, message):
+    n, e = public_key
+    return pow(message, e, n)
+
+
+def decrypt(private_key, ciphertext):
+    n, d = private_key
+    return pow(ciphertext, d, n)
+
+
+def homomorphic_multiply(c1, c2, public_key):
+    n, e = public_key
+    return (c1 * c2) % n
+
+
+# Generate keys
 public_key, private_key = generate_keys()
 
-a = 15
-b = 25
+# Original integers
+a = 7
+b = 3
 
+# Encrypt both integers
 c1 = encrypt(public_key, a)
 c2 = encrypt(public_key, b)
 
-c_sum = homomorphic_add(c1, c2, public_key)
-result = decrypt(private_key, public_key, c_sum)
+# Multiply ciphertexts without decrypting them
+encrypted_product = homomorphic_multiply(c1, c2, public_key)
 
-print("Ciphertext of 15:", c1)
-print("Ciphertext of 25:", c2)
-print("Encrypted sum:", c_sum)
-print("Decrypted sum:", result)
-print("Expected sum:", a + b)
+# Decrypt and verify the product
+result = decrypt(private_key, encrypted_product)
+
+print("Ciphertext of 7:", c1)
+print("Ciphertext of 3:", c2)
+print("Encrypted product:", encrypted_product)
+print("Decrypted product:", result)
+print("Expected product:", a * b)
+print("Products match:", result == a * b)
